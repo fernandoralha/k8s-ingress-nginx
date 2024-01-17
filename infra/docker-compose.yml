@@ -1,0 +1,64 @@
+version: '3.8'
+services:
+  # app service for your backend
+  app:
+    container_name: backend
+    build:
+      context: ../service-products
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_NAME: products # DATABASE_NAME
+      DATABASE_USER: admin # DATABASE_USER
+      DATABASE_PASS: admin # DATABASE_PASS
+      DATABASE_URI: mongodb://database:27017 # DATABASE_URI, example: mongodb://database:27017
+    ports:
+      - '4000:4000'
+    depends_on:
+      - database
+
+  # start the mongodb service as container
+  database:
+    image: mongo:6.0
+    container_name: mongodb
+    restart: always
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin # DATABASE_NAME
+      MONGO_INITDB_ROOT_PASSWORD: admin # DATABASE_USER
+
+# version: "3.4"
+# services:
+#   # service-products:
+#   #   container_name: service-products
+#   #   image: k8s-ingress-nginx/service-products
+#   #   build:
+#   #     context: ../service-products
+#   #     dockerfile: ./Dockerfile
+#   #   ports:
+#   #     - "3000:3000"
+#   #   # depends_on:
+#   #   #   - mongodb
+#   #   environment:
+#   #     - MONGODB_URL=mongodb://mongodb:27017/products
+
+#   # dashboard:
+#   #   container_name: front-products
+#   #   image: k8s-ingress-nginx/front-products
+#   #   build:
+#   #     context: ../front-products
+#   #     dockerfile: ./Dockerfile
+#   #   ports:
+#   #     - "3000:80"
+  
+#   mongodb:
+#     image: mongo:latest
+#     ports:
+#       - 27017:27017
+#     environment:
+#       - MONGODB_URL=mongodb://mongodb:27017/products
+#     volumes:
+#       - mongodb_data_container:/data/db
+
+# volumes:
+#   mongodb_data_container:
