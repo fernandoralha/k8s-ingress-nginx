@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-service
+spec:
+  externalName: mongo-service.database.svc.cluster.local
+  type: ExternalName

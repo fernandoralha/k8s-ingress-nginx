@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+spec:
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+      - name: service-users
+        image: fernandoralha/service-users:v0.0.7
+        ports: 
+        - containerPort: 4000
+        env:
+        - name: DATABASE_NAME
+          value: users
+        - name: DATABASE_USER
+          value: admin
+        - name: DATABASE_PASS
+          value: admin
+        - name: DATABASE_URI
+          value: "mongo-service"
